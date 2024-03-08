@@ -3,13 +3,14 @@ package application
 import (
 	"ApiRestAct1/src/students/domain"
 	"ApiRestAct1/src/students/domain/entities"
+	"ApiRestAct1/src/students/infraestructure/database"
 )
 
 type CreateStudent struct {
 	db domain.IStudent
 }
 
-func NewCreateStudent(db domain.IStudent) *CreateStudent {
+func NewCreateStudent(db *database.MySQL) *CreateStudent {
 	return &CreateStudent{db: db}
 }
 

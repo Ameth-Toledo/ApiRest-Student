@@ -12,6 +12,7 @@ type DependenciesStudent struct {
 	ListStudentByIDController *controllers.ListStudentByIDController
 	UpdateStudentController   *controllers.UpdateStudentController
 	DeleteStudentController   *controllers.DeleteStudentController
+	GetStudentByAgeController *controllers.GetStudentAgeController
 }
 
 func InitStudent() *DependenciesStudent {
@@ -23,5 +24,6 @@ func InitStudent() *DependenciesStudent {
 		ListStudentByIDController: controllers.NewListStudentByIDController(application.NewListStudentById(ps)),
 		UpdateStudentController:   controllers.NewUpdateStudentController(application.NewUpdateStudent(ps)),
 		DeleteStudentController:   controllers.NewDeleteStudentController(application.NewDeleteStudent(ps)),
+		GetStudentByAgeController: controllers.NewGetStudentAgeController(application.NewGetAge(ps)),
 	}
 }

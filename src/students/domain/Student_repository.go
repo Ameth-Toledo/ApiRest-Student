@@ -8,4 +8,5 @@ type IStudent interface {
 	GetById(id int) (entities.Student, error)
 	Update(student entities.Student) error
 	Delete(id int) error
+	GetByAge(minAge int) ([]entities.Student, error)
 }

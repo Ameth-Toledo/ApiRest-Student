@@ -5,11 +5,14 @@ import (
 	asignatureRoutes "ApiRestAct1/src/asignatures/infraestructure/routes"
 	studentInfra "ApiRestAct1/src/students/infraestructure"
 	studentRoutes "ApiRestAct1/src/students/infraestructure/routes"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
+
+	r.Use(cors.Default())
 
 	studentDependencies := studentInfra.InitStudent()
 	studentRoutes.ConfigureRoutes(r,
@@ -18,6 +21,7 @@ func main() {
 		studentDependencies.ListStudentByIDController,
 		studentDependencies.UpdateStudentController,
 		studentDependencies.DeleteStudentController,
+		studentDependencies.GetStudentByAgeController,
 	)
 
 	asignatureDependencies := asignatureInfra.InitAsignature()
@@ -30,5 +34,5 @@ func main() {
 		asignatureDependencies.DeleteAsignatureController,
 	)
 
-	r.Run(":8080")
+	r.Run(":8087")
 }

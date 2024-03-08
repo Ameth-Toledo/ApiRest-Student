@@ -109,3 +109,28 @@ func (mysql *MySQL) Delete(id int) error {
 	log.Printf("[MySQL] - Estudiante con ID %d eliminado", id)
 	return nil
 }
+
+func (mysql *MySQL) GetByAge(minAge int) ([]entities.Student, error) {
+	query := "SELECT id_student, name_student, last_name_student, matricule_student, age_student FROM Student WHERE age_student >= ?"
+	rows, err := mysql.conn.FetchRows(query, minAge)
+	if err != nil {
+		return nil, fmt.Errorf("error al obtener estudiantes mayores de %d años: %v", minAge, err)
+	}
+	defer rows.Close()
+
+	var students []entities.Student
+
+	for rows.Next() {
+		var student entities.Student
+		if err := rows.Scan(&student.ID, &student.Name, &student.LastName, &student.Matricule, &student.Age); err != nil {
+			return nil, fmt.Errorf("error al escanear fila: %v", err)
+		}
+		students = append(students, student)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterando filas: %v", err)
+	}
+
+	return students, nil
+}
